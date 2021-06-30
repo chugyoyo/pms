@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xin.dao.TaskDao">
+    <!-- 分页搜索 -->
+    <select id="pageSearch" resultType="com.xin.dto.api.TaskDTO">
+        select t_task.*,t_client.client_name task_principle_name
+        from t_task,t_client
+        <where>
+            <if test="projectId!= null and projectId != ''">
+                task_project = #{projectId}
+                and t_client.client_id = t_task.task_principle
+            </if>
+        </where>
+    </select>
+</mapper>

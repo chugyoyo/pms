@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xin.dao.ProjectDao">
+    <!-- 分页搜索 -->
+    <select id="pageSearch" resultType="com.xin.dto.api.ProjectDTO">
+        select t_project.*,t_client.client_name project_root_name
+        from t_project,t_client
+        <where>
+            <if test="clientId != null and clientId != ''">
+                project_id in (
+                    select project_id from
+                    t_client_project
+                    where t_client_project.client_id=#{clientId}
+                ) and t_project.project_root=t_client.client_id
+            </if>
+        </where>
+    </select>
+</mapper>

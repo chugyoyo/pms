@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xin.dao.ClientDao">
+    <!-- 分页搜索
+     管理员可以看到所有的t_client的用户
+     -->
+    <select id="pageSearch" resultType="com.xin.po.Client">
+        select * from t_client
+        <where>
+            <if test="keywords != null and keywords != ''">
+                client_name like concat('%', #{keywords}, '%')
+                or
+                client_email like concat('%', #{keywords}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>
